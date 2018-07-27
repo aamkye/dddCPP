@@ -59,7 +59,10 @@ auto ddd::BVecHelper::reorderUnsortedBVec(bVec& obj, uint32_t& newest, uint32_t&
 }
 
 auto ddd::BVecHelper::genericExtract(const size_t& offset) -> bVec {
-  return bVec(bVecData.begin() + getOffSet(), bVecData.begin() + getOffSet(offset));
+  std::vector<u_int8_t>::iterator beg = bVecData.begin() + getOffSet();
+  std::vector<u_int8_t>::iterator end = bVecData.begin() + getOffSet(offset);
+  // GCC7.3.0 issue, cannot pass beg and end inline
+  return bVec(beg, end);
 }
 
 auto ddd::BVecHelper::extract(

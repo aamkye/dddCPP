@@ -246,6 +246,7 @@ bool ddd::Driver::parseDriverActivity(const bVec& binaryData) {
 
 bool ddd::Driver::proceed() {
   for(const auto& entity : data) {
+    // std::cout << entity.first << " " << entity.second.raw.size() << std::endl;
     switch(entity.first) {
       case ddd::identificator::ef::ICC:
         parseIcc(entity.second.raw); break;

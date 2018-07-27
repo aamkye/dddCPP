@@ -26,7 +26,9 @@ bool ddd::Limiter::check(){
     }
   }
 
-  check &= (this->getTime() < ddd::Config::expireDate);
+  if(ddd::Config::expireDate != 0){
+    check &= (this->getTime() < ddd::Config::expireDate);
+  }
 
   return check;
 }
