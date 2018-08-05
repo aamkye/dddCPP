@@ -1,6 +1,34 @@
 # dddCPP
 
+dddCPP is part of dddNuker software which has ability to decode tachograf files of drivers and trucks from binary form to json form.
+
+### GCC 7.3.0 Error
+
+Orgins:
+
+`src/utils/BVecHelper.cpp:61`
+
+Will not pass:
+
+```
+auto ddd::BVecHelper::genericExtract(const size_t& offset) -> bVec {
+  return bVec(bVecData.begin() + getOffSet(), bVecData.begin() + getOffSet(offset));
+}
+```
+
+Will pass:
+
+```
+auto ddd::BVecHelper::genericExtract(const size_t& offset) -> bVec {
+  std::vector<u_int8_t>::iterator beg = bVecData.begin() + getOffSet();
+  std::vector<u_int8_t>::iterator end = bVecData.begin() + getOffSet(offset);
+  return bVec(beg, end);
+}
+```
+
 Backtrace:
+
+```
 /lib/x86_64-linux-gnu/libc.so.6(+0x18eb38)[0x7f9852ef7b38]
 bin/DTTFP-DDD-TO-JSON(ddd::ObjectConvertTool::parseBCD(ddd::structure::general::rObj const&, unsigned long, unsigned long)+0x5d)[0x55d5e4a7601d]
 bin/DTTFP-DDD-TO-JSON(ddd::Driver::parseIcc(std::vector<unsigned char, std::allocator<unsigned char> > const&)+0x25d)[0x55d5e4a2ce9d]
@@ -10,6 +38,4 @@ bin/DTTFP-DDD-TO-JSON(ddd::Raw::Raw(std::__cxx11::basic_string<char, std::char_t
 bin/DTTFP-DDD-TO-JSON(main+0x95)[0x55d5e4a28435]
 /lib/x86_64-linux-gnu/libc.so.6(__libc_start_main+0xe7)[0x7f9852d8ab97]
 bin/DTTFP-DDD-TO-JSON(_start+0x2a)[0x55d5e4a2857a]
-
-
-bVecHelper.extractAndParse
+```
