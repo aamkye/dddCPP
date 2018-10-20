@@ -1,9 +1,5 @@
 image: registry.gitlab.com/dddnuker/dddcpp/builder:1.0
 
-before_script:
-  - apt update
-  - apt install -y gcc g++ cmake
-
 compile:
   script:
   - mkdir build && cd build
