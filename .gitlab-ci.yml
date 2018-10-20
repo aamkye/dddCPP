@@ -1,0 +1,14 @@
+image: ubuntu:18.10
+
+before_script:
+  - apt update
+  - apt install -y gcc g++ cmake
+
+compile:
+  script:
+  - mkdir build && cd build
+  - cmake ..
+  - make
+  artifacts:
+    paths:
+    - build/bin
