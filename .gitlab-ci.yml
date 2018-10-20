@@ -1,4 +1,4 @@
-image: ubuntu:18.10
+image: registry.gitlab.com/dddnuker/dddcpp/builder:1.0
 
 before_script:
   - apt update
