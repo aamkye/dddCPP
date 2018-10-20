@@ -7,7 +7,7 @@
 #include <utils/BVecHelper.hpp>
 #include <structure/Truck.hpp>
 #include <iostream>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <vector>
 #include <fstream>
 

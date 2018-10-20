@@ -1,12 +1,7 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #pragma once
 
 #include <iostream>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <vector>
 
 using bVec = std::vector<unsigned char>;
@@ -29,14 +24,14 @@ namespace ddd {
     }
 
     namespace ef {
-      static const uint32_t ICC                  = 0x0002; //OK
-      static const uint32_t IC                   = 0x0005; //OK
-      static const uint32_t APP_IDENTIFICATION   = 0x0501; //OK
-      static const uint32_t IDENTIFICATION       = 0x0520; //OK
+      static const uint32_t ICC                  = 0x0002;
+      static const uint32_t IC                   = 0x0005;
+      static const uint32_t APP_IDENTIFICATION   = 0x0501;
+      static const uint32_t IDENTIFICATION       = 0x0520;
       static const uint32_t DRIVING_LICENCE_INFO = 0x0521;
-      static const uint32_t EVENTS               = 0x0502; //OK
-      static const uint32_t FAULTS               = 0x0503; //OK
-      static const uint32_t DRIVER_ACTIVITY      = 0x0504; //OK
+      static const uint32_t EVENTS               = 0x0502;
+      static const uint32_t FAULTS               = 0x0503;
+      static const uint32_t DRIVER_ACTIVITY      = 0x0504;
       static const uint32_t VEHICLES_USED        = 0x0505;
       static const uint32_t PLACES               = 0x0506;
       static const uint32_t CURRENT_USAGE        = 0x0507;

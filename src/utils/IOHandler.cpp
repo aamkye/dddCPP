@@ -1,8 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <utils/IOHandler.hpp>
 #include <structure/General.hpp>
 #include <fstream>

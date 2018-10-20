@@ -1,0 +1,9 @@
+[submodule "3rdparty/chroma"]
+	path = 3rdparty/chroma
+	url = git@gitlab.com:amadeusz.kryze/chroma.git
+[submodule "3rdparty/json"]
+	path = 3rdparty/json
+	url = https://github.com/nlohmann/json.git
+[submodule "3rdparty/utfcpp"]
+	path = 3rdparty/utfcpp
+	url = https://github.com/nemtrif/utfcpp.git

@@ -1,9 +1,4 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <structure/Driver.hpp>
 
 auto ddd::structure::ef::ICC::toJson() const -> nlohmann::json {

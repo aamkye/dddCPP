@@ -1,11 +1,6 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
+#pragma once
 
- #pragma once
-
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <structure/General.hpp>
 
 namespace ddd {

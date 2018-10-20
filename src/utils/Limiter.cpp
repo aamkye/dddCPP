@@ -1,8 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <fstream>
 #include <streambuf>
 #include <iostream>
@@ -13,7 +8,8 @@
 
 ddd::Limiter::Limiter() {
   if(!this->check()){
-    exit(-1);
+    std::cout << "Permission denied." << std::endl;
+    exit(2);
   }
 }
 

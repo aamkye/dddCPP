@@ -8,7 +8,7 @@
 #include <utils/IOHandler.hpp>
 #include <utils/ObjectConvertTool.hpp>
 #include <structure/General.hpp>
-#include <Chroma.hpp>
+#include <chroma.hpp>
 #include <iostream>
 #include <map>
 #include <vector>
@@ -27,7 +27,7 @@ namespace ddd {
     const uint32_t certLen = 128;
     ddd::IOHandler ioHandler;
     ddd::ObjectConvertTool convertTool;
-    chroma::Painter chroma;
+    chroma::Operator chroma;
 
   private:
     bool proceed();

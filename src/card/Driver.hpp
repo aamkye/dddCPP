@@ -9,9 +9,9 @@
 #include <structure/Driver.hpp>
 #include <utils/ObjectConvertTool.hpp>
 #include <iostream>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <vector>
-#include <Chroma.hpp>
+#include <chroma.hpp>
 
 namespace ddd {
   class Driver : public ddd::Interface {
@@ -50,6 +50,6 @@ namespace ddd {
     std::map<uint32_t, ddd::structure::general::dataObj> data;
     Driver(std::map<uint32_t, ddd::structure::general::dataObj> data);
     virtual ~Driver();
-    chroma::Painter chroma;
+    chroma::Operator chroma;
   };
 }

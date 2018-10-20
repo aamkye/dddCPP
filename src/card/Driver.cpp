@@ -6,9 +6,9 @@
 #include <card/Driver.hpp>
 #include <utils/BVecHelper.hpp>
 #include <structure/Driver.hpp>
-#include <Chroma.hpp>
+#include <chroma.hpp>
 #include <iostream>
-#include <json.hpp>
+#include <nlohmann/json.hpp>
 #include <vector>
 #include <fstream>
 

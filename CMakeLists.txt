@@ -27,7 +27,9 @@ ENDIF()
 
 INCLUDE_DIRECTORIES(
     src
-    3rdparty
+    3rdparty/chroma/include
+    3rdparty/json/include
+    3rdparty/utfcpp/source
 )
 
 ADD_SUBDIRECTORY(src)

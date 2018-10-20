@@ -1,7 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
 #pragma once
 
 #include <fstream>

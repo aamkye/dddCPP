@@ -1,8 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <utils/BVecHelper.hpp>
 #include <structure/General.hpp>
 #include <fstream>
@@ -61,7 +56,6 @@ auto ddd::BVecHelper::reorderUnsortedBVec(bVec& obj, uint32_t& newest, uint32_t&
 auto ddd::BVecHelper::genericExtract(const size_t& offset) -> bVec {
   std::vector<u_int8_t>::iterator beg = bVecData.begin() + getOffSet();
   std::vector<u_int8_t>::iterator end = bVecData.begin() + getOffSet(offset);
-  // GCC7.3.0 issue, cannot pass beg and end inline
   return bVec(beg, end);
 }
 

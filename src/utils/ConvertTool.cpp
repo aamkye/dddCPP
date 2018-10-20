@@ -1,13 +1,9 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <utils/ConvertTool.hpp>
 #include <structure/General.hpp>
 #include <iostream>
 #include <vector>
 #include <bitset>
+#include <utf8.h>
 
 /**
  * ([0] << 16) +
@@ -75,4 +71,14 @@ auto ddd::ConvertTool::trim(std::string str) -> std::string {
   str.erase(0, str.find_first_not_of(' ')); // prefixing spaces
   str.erase(str.find_last_not_of(' ') + 1); // surfixing spaces
   return str;
+}
+
+auto ddd::ConvertTool::utf8(std::string str) -> std::string {
+    if (!utf8::is_valid(str.begin(), str.end())) {
+      std::string temp;
+      utf8::replace_invalid(str.begin(), str.end(), back_inserter(temp));
+      return temp;
+    } else {
+      return str;
+    }
 }

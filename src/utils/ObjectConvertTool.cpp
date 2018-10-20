@@ -1,8 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <utils/ObjectConvertTool.hpp>
 #include <structure/General.hpp>
 #include <iostream>
@@ -13,11 +8,11 @@ auto ddd::ObjectConvertTool::genericParse(const ddd::structure::general::iObj& o
 }
 
 auto ddd::ObjectConvertTool::genericParse(const ddd::structure::general::hObj& obj, size_t beg, size_t end) -> std::string {
-  return stringToHex(std::string(obj.raw.begin() + beg, obj.raw.end() + end));
+  return utf8(stringToHex(std::string(obj.raw.begin() + beg, obj.raw.end() + end)));
 }
 
 auto ddd::ObjectConvertTool::genericParse(const ddd::structure::general::sObj& obj, size_t beg, size_t end) -> std::string {
-  return trim(std::string(obj.raw.begin() + beg, obj.raw.end() + end));
+  return utf8(trim(std::string(obj.raw.begin() + beg, obj.raw.end() + end)));
 }
 
 auto ddd::ObjectConvertTool::parse(ddd::structure::general::iObj& obj, size_t beg, size_t end) -> void {

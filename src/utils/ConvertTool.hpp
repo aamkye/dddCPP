@@ -1,8 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #pragma once
 
 #include <structure/General.hpp>
@@ -21,5 +16,6 @@ namespace ddd {
     auto bitShift(bVec arr) -> uint32_t;
     auto decToBin(uint32_t input) -> std::string;
     auto binToDec(std::string input) -> uint32_t;
+    auto utf8(std::string str) -> std::string;
   };
 }

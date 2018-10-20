@@ -1,16 +1,11 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #pragma once
 
 #include <card/Interface.hpp>
 #include <structure/Truck.hpp>
 #include <utils/ObjectConvertTool.hpp>
-#include <Chroma.hpp>
+#include <chroma.hpp>
+#include <nlohmann/json.hpp>
 #include <iostream>
-#include <json.hpp>
 #include <vector>
 
 namespace ddd {
@@ -38,6 +33,6 @@ namespace ddd {
     std::map<uint32_t, std::vector<ddd::structure::general::dataObj>> vectorData;
     Truck(std::map<uint32_t, std::vector<ddd::structure::general::dataObj>> vectorData);
     virtual ~Truck();
-    chroma::Painter chroma;
+    chroma::Operator chroma;
   };
 }

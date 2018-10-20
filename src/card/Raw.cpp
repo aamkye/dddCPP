@@ -1,8 +1,3 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <card/Raw.hpp>
 #include <card/Driver.hpp>
 #include <card/Truck.hpp>
@@ -29,7 +24,7 @@ ddd::Raw::Raw(std::string name)
       obj = std::make_unique<ddd::Truck>(this->vectorData);
     } break;
     default: {
-      std::cout << chroma.text("Unknown file type", {chroma::Foreground::iRed, chroma::Type::bold}) << std::endl;
+      std::cout << chroma("Unknown file type", {chroma::foreground::iRed, chroma::type::bold}) << std::endl;
       exit(-1);
     } break;
   }
@@ -46,7 +41,7 @@ bool ddd::Raw::proceed() {
     bVec rawId = ioHandler.readBin(2);
     uint32_t id = convertTool.bitShift(rawId);
 
-    // std::cout << "Structure read (dec): " << chroma.text(id, {chroma::Foreground::iGreen, chroma::Type::bold}) << std::endl;
+    // std::cout << "Structure read (dec): " << chroma(id, {chroma::foreground::iGreen, chroma::type::bold}) << std::endl;
 
     switch (id) {
       case ddd::identificator::ef::ICC:
@@ -83,11 +78,10 @@ bool ddd::Raw::proceed() {
       } break;
 
       default: {
-        std::cout << "Unknown structure read id (dec): " << chroma.text(id, {chroma::Foreground::iRed, chroma::Type::bold}) << std::endl;
+        std::cout << "Unknown structure read id (dec): " << chroma(id, {chroma::foreground::iRed, chroma::type::bold}) << std::endl;
         exit(-1);
       }
     }
-  // } while (ioHandler.fileLength > ioHandler.totalRead);
   } while (!end);
   return true;
 }
@@ -106,13 +100,13 @@ bool ddd::Raw::readDriverStructure(const bVec &rawId) {
   obj.raw = ioHandler.readBin(obj.length.data);
 
   if (obj.type.data == ddd::identificator::data::type::DATA) {
-    // std::cout << "Driver data type (dec): " << chroma.text(obj.type.data, {chroma::Foreground::iGreen, chroma::Type::bold}) << std::endl;
+    // std::cout << "Driver data type (dec): " << chroma(obj.type.data,f{chroma::Foreground::iGreen,tchroma::Type::bold}) << std::endl;
     data[obj.id.data] = obj;
   } else if (obj.type.data == ddd::identificator::data::type::CERT) {
-    // std::cout << "Driver cert type (dec): " << chroma.text(obj.type.data, {chroma::Foreground::iGreen, chroma::Type::bold}) << std::endl;
+    // std::cout << "Driver cert type (dec): " << chroma(obj.type.data,f{chroma::Foreground::iGreen,tchroma::Type::bold}) << std::endl;
     certData[obj.id.data] = obj;
   } else {
-    std::cout << "Unknown driver type (dec): " << chroma.text(obj.type.data, {chroma::Foreground::iRed, chroma::Type::bold}) << std::endl;
+    std::cout << "Unknown driver type (dec): " << chroma(obj.type.data, {chroma::foreground::iRed, chroma::type::bold}) << std::endl;
     exit(-1);
   }
 
@@ -147,7 +141,7 @@ bool ddd::Raw::readTruckStructure(const bVec &rawId) {
 
   uint32_t diff = ioHandler.totalRead;
 
-  // std::cout << "Truck data type (dec): " << chroma.text(obj.id.data, {chroma::Foreground::iGreen, chroma::Type::bold}) << std::endl;
+  // std::cout << "Truck data type (dec): " << chroma(obj.id.data,f{chroma::Foreground::iGreen,tchroma::Type::bold}) << std::endl;
 
   switch (obj.id.data) {
     case ddd::identificator::ed::OVERVIEW: {
@@ -183,7 +177,7 @@ bool ddd::Raw::readTruckStructure(const bVec &rawId) {
     } break;
 
     default: {
-        std::cout << "Unknown truck type (dec): " << chroma.text(obj.type.data, {chroma::Foreground::iGreen, chroma::Type::bold}) << std::endl;
+        std::cout << "Unknown truck type (dec): " << chroma(obj.type.data, {chroma::foreground::iGreen, chroma::type::bold}) << std::endl;
     }
   }
 
