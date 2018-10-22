@@ -3,7 +3,6 @@
 #include <iostream>
 #include <vector>
 #include <bitset>
-#include <utf8.h>
 
 /**
  * ([0] << 16) +
