@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <vector>
 
 using bVec = std::vector<unsigned char>;

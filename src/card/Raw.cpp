@@ -18,13 +18,13 @@ ddd::Raw::Raw(std::string name)
 
   switch(this->cardType) {
     case ddd::identificator::card::DRIVER: {
-      obj = std::make_unique<ddd::Driver>(this->data);
+      obj = std::make_unique<ddd::Driver>(this->data, this->certData);
     } break;
     case ddd::identificator::card::TRUCK: {
       obj = std::make_unique<ddd::Truck>(this->vectorData);
     } break;
     default: {
-      std::cout << chroma("Unknown file type", {chroma::foreground::iRed, chroma::type::bold}) << std::endl;
+      std::cout << chroma("Unknown file type: " + this->cardType, {chroma::foreground::iRed, chroma::type::bold}) << std::endl;
       exit(-1);
     } break;
   }
@@ -40,8 +40,6 @@ bool ddd::Raw::proceed() {
   do {
     bVec rawId = ioHandler.readBin(2);
     uint32_t id = convertTool.bitShift(rawId);
-
-    // std::cout << "Structure read (dec): " << chroma(id, {chroma::foreground::iGreen, chroma::type::bold}) << std::endl;
 
     switch (id) {
       case ddd::identificator::ef::ICC:
@@ -100,10 +98,8 @@ bool ddd::Raw::readDriverStructure(const bVec &rawId) {
   obj.raw = ioHandler.readBin(obj.length.data);
 
   if (obj.type.data == ddd::identificator::data::type::DATA) {
-    // std::cout << "Driver data type (dec): " << chroma(obj.type.data,f{chroma::Foreground::iGreen,tchroma::Type::bold}) << std::endl;
     data[obj.id.data] = obj;
   } else if (obj.type.data == ddd::identificator::data::type::CERT) {
-    // std::cout << "Driver cert type (dec): " << chroma(obj.type.data,f{chroma::Foreground::iGreen,tchroma::Type::bold}) << std::endl;
     certData[obj.id.data] = obj;
   } else {
     std::cout << "Unknown driver type (dec): " << chroma(obj.type.data, {chroma::foreground::iRed, chroma::type::bold}) << std::endl;
@@ -140,8 +136,6 @@ bool ddd::Raw::readTruckStructure(const bVec &rawId) {
   obj.type.data = ddd::identificator::data::type::DATA;
 
   uint32_t diff = ioHandler.totalRead;
-
-  // std::cout << "Truck data type (dec): " << chroma(obj.id.data,f{chroma::Foreground::iGreen,tchroma::Type::bold}) << std::endl;
 
   switch (obj.id.data) {
     case ddd::identificator::ed::OVERVIEW: {

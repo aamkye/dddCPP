@@ -9,9 +9,11 @@
 #include <structure/Driver.hpp>
 #include <utils/ObjectConvertTool.hpp>
 #include <iostream>
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <vector>
 #include <chroma.hpp>
+
+using dataMap = std::map<uint32_t, ddd::structure::general::dataObj>;
 
 namespace ddd {
   class Driver : public ddd::Interface {
@@ -27,6 +29,8 @@ namespace ddd {
     auto parsePlaces(const bVec& binaryData) -> bool;
     auto parseSpecificConditions(const bVec& binaryData) -> bool;
     auto parseVehiclesUsed(const bVec& binaryData) -> bool;
+    auto parseCaCert(const bVec& binaryData) -> bool;
+    auto parseCardCert(const bVec& binaryData) -> bool;
     auto proceed() -> bool;
     ddd::ObjectConvertTool convertTool;
 
@@ -47,8 +51,9 @@ namespace ddd {
     ddd::structure::ef::FAULTS              faults;
     ddd::structure::ef::SPECIFIC_CONDITIONS specificConditions;
 
-    std::map<uint32_t, ddd::structure::general::dataObj> data;
-    Driver(std::map<uint32_t, ddd::structure::general::dataObj> data);
+    dataMap data;
+    dataMap cert;
+    Driver(dataMap data, dataMap cert);
     virtual ~Driver();
     chroma::Operator chroma;
   };

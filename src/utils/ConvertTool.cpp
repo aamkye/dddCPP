@@ -74,11 +74,5 @@ auto ddd::ConvertTool::trim(std::string str) -> std::string {
 }
 
 auto ddd::ConvertTool::utf8(std::string str) -> std::string {
-    if (!utf8::is_valid(str.begin(), str.end())) {
-      std::string temp;
-      utf8::replace_invalid(str.begin(), str.end(), back_inserter(temp));
-      return temp;
-    } else {
-      return str;
-    }
+    return str;
 }

@@ -1,25 +1,20 @@
-/**
- * Amadeusz Kryze (c) 2016-2017
- * Robert Kujawski (c) 2016-2017
- */
-
 #include <card/Driver.hpp>
 #include <utils/BVecHelper.hpp>
 #include <structure/Driver.hpp>
 #include <chroma.hpp>
 #include <iostream>
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <vector>
 #include <fstream>
 
-ddd::Driver::Driver(std::map<uint32_t, ddd::structure::general::dataObj> data)
-  : convertTool(), data(data), chroma() {
+ddd::Driver::Driver(dataMap data, dataMap cert)
+  : convertTool(), data(data), cert(cert), chroma() {
   proceed();
 }
 
 ddd::Driver::~Driver() {}
 
-bool ddd::Driver::parseIcc(const bVec& binaryData) {
+auto ddd::Driver::parseIcc(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(icc.clockStop, 1);
   bVecHelper.extractAndParse(icc.extendedSerialNumber.serialNumber, 4);
@@ -36,14 +31,14 @@ bool ddd::Driver::parseIcc(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseIc(const bVec& binaryData) {
+auto ddd::Driver::parseIc(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(ic.serialNumber, 4);
   bVecHelper.extractAndParse(ic.manufacturingReferences, 4);
   return true;
 }
 
-bool ddd::Driver::parseAppIdentification(const bVec& binaryData) {
+auto ddd::Driver::parseAppIdentification(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(appId.typeOfTachographCardId, 1);
   bVecHelper.extractAndParse(appId.cardStructureVersion, 2);
@@ -55,7 +50,7 @@ bool ddd::Driver::parseAppIdentification(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseControlActivity(const bVec& binaryData) {
+auto ddd::Driver::parseControlActivity(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(controlActivity.type, 1);
   bVecHelper.extractAndParse(controlActivity.time, 4);
@@ -69,7 +64,7 @@ bool ddd::Driver::parseControlActivity(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseSpecificConditions(const bVec& binaryData) {
+auto ddd::Driver::parseSpecificConditions(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   do {
     ddd::structure::ef::SPECIFIC_CONDITIONS::record data;
@@ -80,7 +75,7 @@ bool ddd::Driver::parseSpecificConditions(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseEvents(const bVec& binaryData) {
+auto ddd::Driver::parseEvents(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   do {
     ddd::structure::ef::EVENTS::record data;
@@ -94,7 +89,7 @@ bool ddd::Driver::parseEvents(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseFaults(const bVec& binaryData) {
+auto ddd::Driver::parseFaults(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   do {
     ddd::structure::ef::FAULTS::record data;
@@ -108,7 +103,7 @@ bool ddd::Driver::parseFaults(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseIdentification(const bVec& binaryData) {
+auto ddd::Driver::parseIdentification(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(idCard.issuingMemberState, 1);
   bVecHelper.extractAndParse(idCard.number, 16);
@@ -129,7 +124,7 @@ bool ddd::Driver::parseIdentification(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parsePlaces(const bVec& binaryData) {
+auto ddd::Driver::parsePlaces(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(places.PNR, 1);
   uint32_t newest = places.PNR.data * 10;
@@ -159,7 +154,7 @@ bool ddd::Driver::parsePlaces(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseVehiclesUsed(const bVec& binaryData) {
+auto ddd::Driver::parseVehiclesUsed(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(vehiclesUsed.PNR, 2);
   uint32_t newest = vehiclesUsed.PNR.data * 31;
@@ -194,7 +189,7 @@ bool ddd::Driver::parseVehiclesUsed(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::parseDriverActivity(const bVec& binaryData) {
+auto ddd::Driver::parseDriverActivity(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
   bVecHelper.extractAndParse(driverActivity.POR, 2);
   bVecHelper.extractAndParse(driverActivity.PNR, 2);
@@ -244,9 +239,23 @@ bool ddd::Driver::parseDriverActivity(const bVec& binaryData) {
   return true;
 }
 
-bool ddd::Driver::proceed() {
+auto ddd::Driver::parseCardCert(const bVec& binaryData) -> bool {
+  BVecHelper bVecHelper(binaryData);
+  bVecHelper.extractAndParse(cardCert.cert, 194);
+  cardCert.valid.data = 0;
+  return true;
+}
+
+auto ddd::Driver::parseCaCert(const bVec& binaryData) -> bool {
+  BVecHelper bVecHelper(binaryData);
+  bVecHelper.extractAndParse(caCert.cert, 194);
+  caCert.valid.data = 0;
+  return true;
+}
+
+auto ddd::Driver::proceed() -> bool {
   for(const auto& entity : data) {
-    // std::cout << entity.first << " " << entity.second.raw.size() << std::endl;
+    std::cout << entity.first << " " << entity.second.raw.size() << std::endl;
     switch(entity.first) {
       case ddd::identificator::ef::ICC:
         parseIcc(entity.second.raw); break;
@@ -270,15 +279,17 @@ bool ddd::Driver::proceed() {
         parseControlActivity(entity.second.raw); break;
       case ddd::identificator::ef::SPECIFIC_CONDITIONS:
         parseSpecificConditions(entity.second.raw); break;
-      case ddd::identificator::ef::CARD_CERT: break;
-      case ddd::identificator::ef::CA_CERT: break;
+      case ddd::identificator::ef::CARD_CERT:
+        parseCardCert(entity.second.raw); break;
+      case ddd::identificator::ef::CA_CERT:
+        parseCaCert(entity.second.raw); break;
       default: break;
     }
   }
   return true;
 }
 
-bool ddd::Driver::toJson(const std::string& outFile = "", const bool& readable = false) const {
+auto ddd::Driver::toJson(const std::string& outFile = "", const bool& readable = false) const -> bool {
   nlohmann::json j;
   j["type"]                   = "driver";
   j["iccData"]                = icc.toJson();
@@ -292,6 +303,8 @@ bool ddd::Driver::toJson(const std::string& outFile = "", const bool& readable =
   j["placesData"]             = places.toJson();
   j["vehiclesUsedData"]       = vehiclesUsed.toJson();
   j["driverActivityData"]     = driverActivity.toJson();
+  j["caCert"]                 = caCert.toJson();
+  j["cardCert"]               = cardCert.toJson();
 
   std::ofstream o(outFile, std::ios::binary);
 

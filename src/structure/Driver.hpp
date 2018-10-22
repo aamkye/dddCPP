@@ -1,6 +1,6 @@
 #pragma once
 
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <structure/General.hpp>
 
 namespace ddd {
@@ -20,12 +20,16 @@ namespace ddd {
         ddd::structure::general::iObj cardPersonalID;
         ddd::structure::general::sObj embedderIcAssemblerID;
         ddd::structure::general::hObj icIdentifier;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
       struct IC : public ddd::structure::general::jsonable {
         ddd::structure::general::hObj serialNumber;
         ddd::structure::general::hObj manufacturingReferences;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -37,6 +41,8 @@ namespace ddd {
         ddd::structure::general::iObj activityStructureLength;
         ddd::structure::general::iObj noOfCardVehicleRecords;
         ddd::structure::general::iObj noOfCardPlaceRecords;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -51,6 +57,8 @@ namespace ddd {
         ddd::structure::general::sObj holderFirstNames;
         ddd::structure::general::sObj holderBirthDate;
         ddd::structure::general::sObj holderPreferredLanguage;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -64,6 +72,8 @@ namespace ddd {
         };
 
         std::vector<record> records;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -77,6 +87,8 @@ namespace ddd {
         };
 
         std::vector<record> records;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -101,6 +113,8 @@ namespace ddd {
         ddd::structure::general::iObj POR;
         ddd::structure::general::iObj PNR;
         std::vector<daily> dailyChange;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -117,6 +131,8 @@ namespace ddd {
 
         ddd::structure::general::iObj PNR;
         std::vector<record> records;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -131,6 +147,8 @@ namespace ddd {
 
         ddd::structure::general::iObj PNR;
         std::vector<record>           records;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -144,6 +162,8 @@ namespace ddd {
         ddd::structure::general::sObj vehicleRegistrationNumber;
         ddd::structure::general::iObj downloadPeriodBegin;
         ddd::structure::general::iObj downloadPeriodEnd;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
@@ -154,11 +174,21 @@ namespace ddd {
         };
 
         std::vector<record> records;
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
 
-      struct CARD_CERT {};
-      struct CA_CERT {};
+      struct CARD_CERT : public ddd::structure::general::jsonable{
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
+        auto toJson() const -> nlohmann::json;
+      };
+      struct CA_CERT : public ddd::structure::general::jsonable{
+        ddd::structure::general::iObj valid;
+        ddd::structure::general::hObj cert;
+        auto toJson() const -> nlohmann::json;
+      };
     }
   }
 }

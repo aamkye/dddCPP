@@ -1,4 +1,4 @@
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <structure/Driver.hpp>
 
 auto ddd::structure::ef::ICC::toJson() const -> nlohmann::json {
@@ -162,5 +162,19 @@ auto ddd::structure::ef::DRIVER_ACTIVITY::toJson() const -> nlohmann::json {
       {"changeInfo", l}};
     j["activityDaily"].push_back(k);
   }
+  return j;
+}
+
+auto ddd::structure::ef::CA_CERT::toJson() const -> nlohmann::json {
+  nlohmann::json j = {
+    {"valid", valid.data},
+    {"cert", cert.data}};
+  return j;
+}
+
+auto ddd::structure::ef::CARD_CERT::toJson() const -> nlohmann::json {
+  nlohmann::json j = {
+    {"valid", valid.data},
+    {"cert", cert.data}};
   return j;
 }

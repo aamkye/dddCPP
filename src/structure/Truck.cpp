@@ -1,4 +1,4 @@
-#include <nlohmann/json.hpp>
+#include <json.hpp>
 #include <structure/Truck.hpp>
 
 auto ddd::structure::ed::OVERVIEW::toJson() const -> nlohmann::json {
@@ -16,7 +16,11 @@ auto ddd::structure::ed::OVERVIEW::toJson() const -> nlohmann::json {
     {"cardNumber", cardNumber.data},
     {"companyOrWorkshopName", companyOrWorkshopName.data},
     {"vuCompanyLocks", {}},
-    {"vuControlActivity", {}}
+    {"vuControlActivity", {}},
+    {"signature", {
+      {"valid", true},
+      {"data", signature.data}
+    }}
   };
 
   for(auto const& x : vuCompanyLocks.records){
