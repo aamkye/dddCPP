@@ -241,14 +241,24 @@ auto ddd::Driver::parseDriverActivity(const bVec& binaryData) -> bool {
 
 auto ddd::Driver::parseCardCert(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
-  bVecHelper.extractAndParse(cardCert.cert, 194);
+  bVecHelper.extractAndParse(cardCert.cert.sign, 128);
+  bVecHelper.extractAndParse(cardCert.cert.cn, 58);
+  bVecHelper.extractAndParse(cardCert.cert.certificationAuthorityReference, 8);
   cardCert.valid.data = 0;
   return true;
 }
 
 auto ddd::Driver::parseCaCert(const bVec& binaryData) -> bool {
   BVecHelper bVecHelper(binaryData);
-  bVecHelper.extractAndParse(caCert.cert, 194);
+
+  // bVecHelper.extractAndParse(caCert.cert, 194);
+  bVecHelper.extractAndParse(caCert.cert.sign, 128);
+  bVecHelper.extractAndParse(caCert.cert.cn, 58);
+  bVecHelper.extractAndParse(caCert.cert.certificationAuthorityReference, 8);
+
+  ddd::ecpk::n;
+  caCert.cert.sign.raw;
+
   caCert.valid.data = 0;
   return true;
 }

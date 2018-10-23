@@ -168,13 +168,21 @@ auto ddd::structure::ef::DRIVER_ACTIVITY::toJson() const -> nlohmann::json {
 auto ddd::structure::ef::CA_CERT::toJson() const -> nlohmann::json {
   nlohmann::json j = {
     {"valid", valid.data},
-    {"cert", cert.data}};
+    {"cert", {
+      {"sign", cert.sign.data},
+      {"cn", cert.cn.data},
+      {"certificationAuthorityReference", cert.certificationAuthorityReference.data}
+    }}};
   return j;
 }
 
 auto ddd::structure::ef::CARD_CERT::toJson() const -> nlohmann::json {
   nlohmann::json j = {
     {"valid", valid.data},
-    {"cert", cert.data}};
+    {"cert", {
+      {"sign", cert.sign.data},
+      {"cn", cert.cn.data},
+      {"certificationAuthorityReference", cert.certificationAuthorityReference.data}
+    }}};
   return j;
 }

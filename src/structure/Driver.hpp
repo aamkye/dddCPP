@@ -180,13 +180,25 @@ namespace ddd {
       };
 
       struct CARD_CERT : public ddd::structure::general::jsonable{
+        struct certification {
+          ddd::structure::general::hObj sign;
+          ddd::structure::general::hObj cn;
+          ddd::structure::general::hObj certificationAuthorityReference;
+        };
+
+        certification cert;
         ddd::structure::general::iObj valid;
-        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
       struct CA_CERT : public ddd::structure::general::jsonable{
+        struct certification {
+          ddd::structure::general::hObj sign;
+          ddd::structure::general::hObj cn;
+          ddd::structure::general::hObj certificationAuthorityReference;
+        };
+
+        certification cert;
         ddd::structure::general::iObj valid;
-        ddd::structure::general::hObj cert;
         auto toJson() const -> nlohmann::json;
       };
     }
