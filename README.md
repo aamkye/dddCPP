@@ -2,6 +2,29 @@
 
 dddCPP is part of dddNuker software which has ability to decode tachograf files of drivers and trucks from binary form to json form.
 
+### Requirements:
+- C++/Clang
+- Cmake + make
+- Ninja
+- Python3
+- UPX
+
+### Build
+
+- `git clean -fx`
+- `git submodule update --init`
+- `cmake -G Ninja .`
+- `ninja`
+- done
+
+Or
+
+- `git clean -fx`
+- `git submodule update --init`
+- `cmake .`
+- `make`
+- done
+
 ### GCC 7.3.0 Error
 
 Orgins:

@@ -16,3 +16,7 @@ composer.lock
 .vscode/
 php/*.json
 bin/*.json
+*.o
+*.ninja
+.ninja_deps
+.ninja_log
