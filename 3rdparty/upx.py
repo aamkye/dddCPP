@@ -30,8 +30,8 @@ def yellow(text):
     return "\x1b[1;33m" + text + "\x1b[0m"
 
 if which("upx"):
-    print "-- " + green("UPX found")
+    print("-- " + green("UPX found"))
     var = os.popen("upx --ultra-brute -q {}".format(sys.argv[1])).read().split("\n")[6].split()
-    print "-- " + yellow("UPX reduced size of {} to {} from {}kb to {}kb".format(var[5], var[3], var[0], var[2]))
+    print("-- " + yellow("UPX reduced size of {} to {} from {}kb to {}kb".format(var[5], var[3], var[0], var[2])))
 else:
-    print "-- " + red("UPX not found")
+    print("-- " + red("UPX not found"))
